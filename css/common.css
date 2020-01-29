@@ -1,0 +1,34 @@
+/*마이 스타일 CSS*/
+/*마이 스타일 CSS*/
+/*마이 스타일 CSS*/
+
+
+/*구글 웹폰트*/
+@import url('https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap');
+	
+/*이름에 쓸 영문 폰트*/
+@import url('https://fonts.googleapis.com/css?family=Lalezar&display=swap');
+
+
+		/* 공통사항 */
+		* { box-sizing: border-box; }
+
+		body{
+			background-color: 
+			font-family: 'Do Hyeon', sans-serif;
+			margin: 0;b               
+			padding: 0;
+			font-size: 14px;
+			color: #222222;
+		}
+		ul{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+		a {
+			color: inherit;  /*부모에게 상속받은 색깔을 사용함 inherit 옵션*/
+			text-decoration-line: none;
+		}
+		
