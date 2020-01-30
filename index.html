@@ -2,7 +2,9 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- 반응형 웹 준비  -->
 	<title>저를 소개합니다</title>
+
 	<script src="https://kit.fontawesome.com/fc5ae9294d.js" crossorigin="anonymous"></script> <!-- 폰트어썸 아이콘 사용 스크립트 --> 
 	<link rel="stylesheet" type="text/css" href="css/common.css">
 	<link rel="stylesheet" type="text/css" href="css/effect.css">
@@ -12,6 +14,8 @@
 
 		
 		.wrap{
+			max-width: 1400px;
+			min-width: 360px;
 			border: 1px solid black;
 			max-width: 1400px;
 			display: flex;
@@ -109,7 +113,7 @@
 		}
 		
 		.bar_border{
-			width: 500px;
+			width: 100%;
 			height: 30px;
 			border: 1px solid #74b0d2;
 			background-color: #f1f1f1;
@@ -310,6 +314,72 @@
 			height: 100%;
 			display: none; /*모달 랩을 숨김*/
 		}
+	
+	/*■■■■■■ 반응형웹 만들기 ■■■■■■■■■■*/
+		/*
+			##Device = Most of the Smartphones Mobiles (Portrait)
+			##Screen = B/w 320px to 479px
+			##Device = 대부분의 스마트폰 모바일 기기(세로)
+			##Screen = 320px에서 479px 사이
+			디바이스 사이즈가 320에서 280사이면 아래 사이즈를 적용한다.
+		*/
+		@media (min-width: 320px) and (max-width: 480px) {
+			.wrap{
+				width: 100%;
+				flex-direction: column; /*가로로 붙어있던 컨텐츠 들이 세로로 내려옴*/
+				padding: 5px;
+			}
+			.side_wrap, .content_wrap{
+				width: 100%;
+				margin: 0 auto;
+			}
+		/*네비게이션 메뉴 숨김 기능*/
+			.nav_menu{
+				display: none;  
+			}
+
+		/*경력란의 날짜줄 보이지 않게함*/
+			table tr th:last-child, table tr td:last-child {
+				display: none;
+			}
+			table td, table th{
+				font-size: 12px;
+			}
+
+		/*우측하단에 떠있는 버튼 2개 사이즈 줄임*/
+			.fix_btn {
+				width: 50px;
+				height: 50px;
+				right: 20px;
+				font-size: 20px;
+			}
+			.top_btn {
+				bottom: 95px;
+			}
+			
+		/*우측하단의 메일버튼 눌렀을시 모달창 위치조정*/
+			.content_padding {
+				padding: 10px;
+			}
+			.modal_wrap {
+				justify-content: center;
+				align-items: center;
+			}
+			.msg_wrap {
+				width: 95%;
+				position: static;
+			}
+			.note_wrap {
+				padding: 10px;
+				width: 100%;
+			}
+			.note_wrap input {
+				font-size: 12px;
+				height: 20px;
+			}
+
+		}/*미디어 종료*/
+
 	</style>
 
 </head>
@@ -402,8 +472,8 @@
 					</div>
 				</div>	
 
-
-				<div class="common_panel layer nav">
+			<!-- 메뉴버튼 -->
+				<div class="common_panel layer nav nav_menu">
 					<div class="menu_title">
 						<i class="fas fa-bars"></i>
 						<span>Menu</span>
