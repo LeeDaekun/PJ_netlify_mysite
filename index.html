@@ -159,6 +159,29 @@
 			background-color: #cCC;
 		}
 
+	/*github resume 버튼 효과 =================*/	
+		.download_wrap div {
+			transition: transform .3s;
+			border-radius: 5px;
+			overflow: hidden;
+		}
+		.download_wrap div button {
+			padding: 8px 20px;
+			color: white;
+			background-color: #EBA444;
+			border: none;
+			outline: none;
+			cursor: pointer;
+			width: 110px;
+			height: 35px;
+		}
+		.download_wrap div:hover {
+			transform: scale(1.2);
+			box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
+		}
+
+
+
 		.download_wrap{
 			width: 100%;
 			padding: 25px;
@@ -208,6 +231,7 @@
 		.top_btn{
 			bottom: 115px;
 			background-color: #22c7ad;
+			display: none;
 		}
 		.msg_wrap{
 			position: absolute;
@@ -259,16 +283,21 @@
 			justify-content: space-between; /*양쪽벽쪽부터 정렬시킨다.*/
 			align-items: center; /*수평선상에서 센터를 맞춤*/
 		}
-		.send_btn > a {
+	/*센드 메시지 버튼 꾸미기*/
+		.send_btn > button {
 			width: 200px;
 			display: flex;
 			justify-content: center;
+			align-items: center;
 			padding: 12px 15px;
-			border: 1px solid #414D41;
+			border: 1px solid #EBA444;
 			border-radius: 5px;
+			outline: none;
+			background-color: white;
+			cursor: pointer;
 		}
-		.err_msg{
-			color: red;
+		.err_msg {
+			color: #DD4B4F;
 			font-size: 20px;
 			visibility: hidden; /*에러메시지를 숨김*/
 		}
@@ -297,31 +326,53 @@
 				<i class="fas fa-envelope"></i>
 				<span>Messange</span>
 			</div>
-			
-			<div class="note_wrap">
+		<!-- //----폼테그 안에 넣기----값에 name 값을 붙여야 전송할수 있음------action에 구글에서 복사했던거 붙여넣기-------------- -->
+			<!-- 이제 버튼을 눌러서 보내면 구글 메일로 이메일이 전송됨 -->
+			<form class="gform" method="POST" action="https://script.google.com/macros/s/AKfycbxq2rZodScwWyHpTSDUDIxiV2Yfw67huyRKRKuD/exec">
+				<div class="note_wrap">
 				<div class="conn_note">Please contact me if you are interested.</div>
 				
 				<div class="send_info">
 					<div class="send_name">
-						<input type="text" class="send_input" placeholder="Name">
+						<input type="text" class="send_input" placeholder="Name" name="name">
 					</div>
 
 					<div class="area"></div>
 					<div class="send_email">
-						<input type="text" class="send_input" placeholder="Email">
+						<input type="text" class="send_input" placeholder="Email" name="email">
 					</div>
 				</div>
 
 				
 				<div class="send_msg">
-					<input type="text" class="send_input" placeholder="Massage">
+					<input type="text" class="send_input" placeholder="Massage" name="message">
 				</div>
 
 				<div class="send_btn">
 					<span class="err_msg">Please enter a value:/ </span>
-					<a href="#">SEND MESSAGE<i class="fas fa-rocket"></i></a>
+					<button type="submit">SEND MESSAGE<i class="fas fa-rocket"></i></button>
 				</div>
 			</div> <!-- end note_wrap -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			</form>
+
+
+
+			
+			
 		</div> <!-- end msg_wrap -->
 	</div><!-- end modal_wrap -->
 	
@@ -398,16 +449,18 @@
 						<span>Downloads</span>
 					</div>
 					<div class="content_padding download_wrap">
-						<div class="#">
-							<a href="https://github.com/LeeDaekun/" target="_blank">
-								<i class="fab fa-github"></i>Github
-							</a>
+						<div class="git_wrap">
+							<button class="git_btn">
+								Github<i class="fab fa-github"></i>
+							</button>
 						</div>
 						<div class="resume_wrap">
-							<a href="#">
-								Resume<i class="fas fa-download"></i>
-							</a>
+							<button class="resume_btn">
+								Resume <i class="fas fa-download"></i>
+							</button>
 						</div>
+					
+
 					</div>
 				</div>
 
@@ -557,21 +610,38 @@
 			var widthVal = $(this).text();
 			$(this).animate({width:widthVal},1000);
 		});
+	//■■■■■ Scroll TOP버튼 생성 및 TOP으로 이동■■■■■■■■■■
+		$(window).scroll(function(){ //스크롤바가 조금이라도 움직이면
+			//alert('움직임');
+
+				//스크롤탑이 80이상이 되면, (아래로 80px) 
+			if(document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+				$('.top_btn').fadeIn().css("display","flex"); //이미지가 천천히 등장
+			} else {
+				$('.top_btn').fadeOut();  //이미지가 천천히 퇴장
+			}
+		}); //---end scroll---
+		$('.top_btn').click(function(){  //텁버튼을 클릭하면
+			$('html, body').animate({scrollTop : 0}, 800);  //0.8초에 걸쳐서 올라가라
+		});
 	});
 
-	//커서가 class='send_input 에 커서가 없으면 빠져나간 블러상태 (크롬 F12 누르고 콘솔창에서 확인 가능)
-	//input blur시 유효성 체크 (테두리 및 경고메시지 출력)
-	$(document).on('blur', '.send_input', function(){  
-		var inputVal = $(this).val();  //(this 는현재 선택된 순번의 .send_input 이다.) (val 은 입력창에 사용자가 입력한값)
-		if (inputVal == '') { //입력이 공백인경우에
-			$('.err_msg').css('visibility', 'visible'); //CSS  .err_msg의 visibility 옵션을 visible 로 설정함 (보여지게 바꿈)
-			$(this).parent().css('border', '2px solid #DD4B4F');  //내 부모에게 테두리 효과를 먹임 
-		}else{	//값이 입력됐다면
-			$('.err_msg').css('visibility', 'hidden');  //CSS  .err_msg의 visibility 옵션을 hidden 으로 설정함 (숨겨지게 바꿈)
-			$(this).parent().css('border', '2px solid #2F3138');
-		}
+	
+	/*커서가 class='send_input 에 커서가 없으면 빠져나간 블러상태
+	  (크롬 F12 누르고 콘솔창에서 확인 가능)*/
 
-		//사용자가 값을 input에 모두 입력했으면, 샌드버튼에 색상을 입힌다.
+	//■■■■■input blur시 유효성 체크 (테두리 및 경고메시지 출력)■■■■■■■■■■
+		$(document).on('blur', '.send_input', function(){  
+			var inputVal = $(this).val();  //(this 는현재 선택된 순번의 .send_input 이다.) (val 은 입력창에 사용자가 입력한값)
+			if (inputVal == '') { //입력이 공백인경우에
+				$('.err_msg').css('visibility', 'visible'); //CSS  .err_msg의 visibility 옵션을 visible 로 설정함 (보여지게 바꿈)
+				$(this).parent().css('border', '2px solid #DD4B4F');  //내 부모에게 테두리 효과를 먹임 
+			}else{	//값이 입력됐다면
+				$('.err_msg').css('visibility', 'hidden');  //CSS  .err_msg의 visibility 옵션을 hidden 으로 설정함 (숨겨지게 바꿈)
+				$(this).parent().css('border', '2px solid #2F3138');
+			}
+
+	//■■■■■사용자가 값을 input에 모두 입력했으면, 샌드버튼에 색상을 입힌다.■■■■■■■■■■
 		var code=0;
 		$('.note_wrap').find('.send_input').each(function(){  //find는 send input을 3개 찾아온다. each는 3번 반복시킴
 			if ($(this).val()== '') {
@@ -600,6 +670,18 @@
 			$('.conn_btn').css('display','flex');
 		});
 
+	//■■■■■리썸 눌렀을때 hwp 다운로드■■■■■■■■■■
+		$(document).on('click', '.resume_btn', function(){
+		// 이력서 버튼 클릭시 resume.hwp 다운로드
+		window.location.assign('resume/resume.hwp');
+		});
+
+		//깃허브 버튼 눌렀을때 사이트로 이동
+		$(document).on('click', '.git_btn', function(){
+		location.href='https://github.com/LeeDaekun';
+		});
+
+	
 
 </script>
 </html>
